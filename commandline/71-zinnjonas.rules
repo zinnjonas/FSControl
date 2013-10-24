@@ -1,0 +1,3 @@
+#FSControl rule
+
+ACTION=="add",SUBSYSTEM=="usb",ATTRS{idVendor}=="16c0",ATTRS{idProduct}=="27d8",MODE:="0666",GROUP:="users"
