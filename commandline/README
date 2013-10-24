@@ -1,0 +1,5 @@
+
+Camara Plugin:
+ - User has to be in video group
+ - you will need udev rule for LED plugin
+

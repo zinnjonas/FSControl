@@ -1,0 +1,24 @@
+# global Options
+
+CC = gcc
+LIBS =  `pkg-config --libs glib-2.0` -lpurple -lusb -ldl -lm `pkg-config opencv --libs` -L ./lib -lcb_plugin
+INCLUDEDIR =  -I src/ -I plugin/ -I /usr/include/libpurple/ -I /usr/include/glib-2.0/ -I /usr/lib/glib-2.0/include/  
+SRC = $(wildcard plugin/$(arg1)/*.c)
+OBJECTS = $(SRC:%.c=obj/%.o) 
+NAME   = plugins/$(arg1).so
+LCFLAGS= -shared -o -Wl,-soname,
+CFLAGS  = -o -Wall -fPIC
+default:$(NAME)
+
+$(NAME):plugdir $(OBJECTS)
+	@echo "linke plugin" $(NAME)
+	$(CC) $(LCFLAGS)$(NAME) -o $(NAME) $(OBJECTS) $(LIBS)
+	@strip $(NAME)
+
+plugdir:	
+	@mkdir -p plugins
+
+obj/%.o: %.c
+	@mkdir -p $(dir name $@)
+	@echo "compiliere " $<
+	@$(CC) $(CFLAGS) $(INCLUDEDIR) -c $< -o $@
